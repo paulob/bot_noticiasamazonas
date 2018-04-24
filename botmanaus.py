@@ -19,12 +19,9 @@ def run_bot(r):
     while n < 9 :
         n = n + 1
         try :
-            print('POSTANDO')
             r.subreddit('manaus').submit(str(title[n]),url=link[n],resubmit=False,send_replies=False)
         except:
-            print ('ERRO')
             n = n + 1
-        print (n)
     time.sleep(21600)
 
 def g1_news():
@@ -32,7 +29,7 @@ def g1_news():
     soup = BeautifulSoup(html_page, "html.parser")
     links = []
     titles = []
-    for link in soup.findAll('a', attrs={'href': re.compile("^https://g1.globo.com/am/amazonas/noticia/"), }):
+    for link in soup.findAll('a', class_='feed-post-link'):
         links.append(link.get('href'))
     for link2 in soup.findAll('p', class_='feed-post-body-title'):
         titles.append(link2.string)
