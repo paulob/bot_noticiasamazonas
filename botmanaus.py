@@ -14,7 +14,7 @@ def bot_login():
     return r
 
 def run_bot(r):
-    link, title = g1_news()
+    link, title = d24_amazonia()
     n = -1
     while n < 9 :
         n = n + 1
@@ -33,6 +33,17 @@ def g1_news():
         links.append(link.get('href'))
     for link2 in soup.findAll('p', class_='feed-post-body-title'):
         titles.append(link2.string)
+    return links, titles
+
+def d24_amazonia():
+    html_page = urllib.request.urlopen("http://d24am.com/amazonia/")
+    soup = BeautifulSoup(html_page, "html.parser")
+    links = []
+    titles = []
+    for link in soup.findAll('a', rel="bookmark"):
+        links.append(link.get('href'))
+    for link2 in soup.findAll('img', class_='attachment-colormag-archive-01 size-colormag-archive-01 wp-post-image'):
+        titles.append(link2.img[alt])
     return links, titles
 
 r = bot_login()
